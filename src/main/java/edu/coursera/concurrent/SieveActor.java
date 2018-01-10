@@ -9,6 +9,9 @@ import edu.rice.pcdp.Actor;
  * countPrimes to determin the number of primes <= limit.
  */
 public final class SieveActor extends Sieve {
+
+    private int numberOfPrimes = 0;
+
     /**
      * {@inheritDoc}
      *
@@ -19,7 +22,11 @@ public final class SieveActor extends Sieve {
      */
     @Override
     public int countPrimes(final int limit) {
-        throw new UnsupportedOperationException();
+        SieveActorActor sieveActorActor = new SieveActorActor();
+        for(int i=2; i<limit; i++) {
+            sieveActorActor.process(i);
+        }
+        return numberOfPrimes;
     }
 
     /**
@@ -27,6 +34,9 @@ public final class SieveActor extends Sieve {
      * parallel.
      */
     public static final class SieveActorActor extends Actor {
+
+        private Integer myPrime;
+
         /**
          * Process a single message sent to this actor.
          *
@@ -36,7 +46,10 @@ public final class SieveActor extends Sieve {
          */
         @Override
         public void process(final Object msg) {
-            throw new UnsupportedOperationException();
+            System.out.print("Prime " + msg);
+            if(myPrime == null)
+                myPrime = (Integer)msg;
+            if((Integer)msg % myPrime != 0)
         }
     }
 }
